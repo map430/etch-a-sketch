@@ -17,11 +17,14 @@
 <script>
 
 
+    
+
 
 const container = document.querySelector(".container");
 let newDiv;
-let userInput = 50;
+let userInput = 75;
 let numOfSquares = userInput ** 2;
+let lengthOfSquare = 500/userInput
 
 for (let i = 0; i < numOfSquares; i++) {
     newDiv = document.createElement("div");
@@ -30,9 +33,11 @@ for (let i = 0; i < numOfSquares; i++) {
 }
 
 
+
 const divSquares = document.querySelectorAll(".divSquares");
 divSquares.forEach(function(square){  
-square.addEventListener("mouseover", function () {
+    square.style.width = lengthOfSquare + "px";
+    square.addEventListener("mouseover", function () {
     square.classList.remove("divSquares");
     square.classList.add("divSquaresColor");
 });
