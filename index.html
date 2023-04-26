@@ -1,52 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="title">Retro Sketch</div>
+    <div class="middle">
+      <div class="middleLeft"></div>
+      <button class="buttonNumOfSquares">
+        Click to Choose Number of Boxes
+      </button>
+      <div class="container"></div>
+      <div class="middleRight"></div>
+    </div>
+    <div class="bottom"></div>
 
-<div class = "title"> Retro Sketch
-</div>
+    <script>
+      const container = document.querySelector(".container");
+      let newDiv;
+      let squaresPerRow = 50;
+      let numOfSquares = squaresPerRow ** 2;
+      let lengthOfSquare = 500 / squaresPerRow;
 
-<div class = "container"></div>
+      function createGrid() {
+        container.innerHTML = "";
+        for (let i = 0; i < numOfSquares; i++) {
+          newDiv = document.createElement("div");
+          newDiv.classList.add("divSquares");
+          container.appendChild(newDiv);
+        }
+        const divSquares = document.querySelectorAll(".divSquares");
+      divSquares.forEach(function (square) {
+        square.style.width = lengthOfSquare + "px";
+        square.addEventListener("mouseover", function () {
+          square.classList.remove("divSquares");
+          square.classList.add("divSquaresColor");
+        });
+      });
+      }
 
-<script>
+      createGrid();
 
+      function buttonPrompt() {
+        let userInput = parseInt(prompt("Select Number of Boxes Per Row"));
+        let squaresPerRow = 50;
+        if (userInput > 50 && userInput <= 100) {
+         squaresPerRow = (50 + (userInput - 50));
+         numOfSquares = squaresPerRow ** 2;
+         lengthOfSquare = 500 / squaresPerRow;   
+         createGrid();
+        } else if (userInput < 50 && userInput > 0) {
+          squaresPerRow = 50 - (50 - userInput);
+          squaresPerRow = (50 + (userInput - 50));
+         numOfSquares = squaresPerRow ** 2;
+         lengthOfSquare = 500 / squaresPerRow;
+         createGrid();
+        } else if (userInput === 50);
+        else if (userInput <= 0 || userInput > 100) {
+          alert("Please enter a number between 1-100");
+        }
+      }
 
-    
+      const buttonNumOfSquares = document.querySelector(".buttonNumOfSquares");
+      buttonNumOfSquares.addEventListener("click", buttonPrompt);
 
-
-const container = document.querySelector(".container");
-let newDiv;
-let userInput = 75;
-let numOfSquares = userInput ** 2;
-let lengthOfSquare = 500/userInput
-
-for (let i = 0; i < numOfSquares; i++) {
-    newDiv = document.createElement("div");
-    newDiv.classList.add("divSquares");
-    container.appendChild(newDiv);
-}
-
-
-
-const divSquares = document.querySelectorAll(".divSquares");
-divSquares.forEach(function(square){  
-    square.style.width = lengthOfSquare + "px";
-    square.addEventListener("mouseover", function () {
-    square.classList.remove("divSquares");
-    square.classList.add("divSquaresColor");
-});
-});
-
-
-
-
-</script>
-    
-</body>
+    </script>
+  </body>
 </html>
