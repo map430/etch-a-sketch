@@ -88,13 +88,62 @@
       );
       buttonColorChangeBlack.addEventListener("click", changeColorBlack);
 
+      //Establish an RBG to HSL conversion function
+      //use get windows command to pull characteristics of the element
+
+      function RGBToHSL(r, g, b) {
+        // From CSS Tricks https://css-tricks.com/converting-color-spaces-in-javascript/
+        r /= 255;
+        g /= 255;
+        b /= 255;
+
+        let cmin = Math.min(r, g, b),
+          cmax = Math.max(r, g, b),
+          delta = cmax - cmin,
+          h = 0,
+          s = 0,
+          l = 0;
+
+        if (delta == 0) h = 0;
+        else if (cmax == r) h = ((g - b) / delta) % 6;
+        else if (cmax == g) h = (b - r) / delta + 2;
+        else h = (r - g) / delta + 4;
+
+        h = Math.round(h * 60);
+
+        if (h < 0) h += 360;
+
+        l = (cmax + cmin) / 2;
+
+        s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+
+        s = +(s * 100).toFixed(1);
+        l = +(l * 100).toFixed(1);
+
+        return "hsl(" + h + "," + s + "%," + l + "%)";
+      }
+
+      const divSquares = document.querySelector(".divSquares");
+      const rbgBackground = window.getComputedStyle(divSquares).backgroundColor;
+      const rbgBackgroundNum = rbgBackground.match(/\d+/g);
+      const rbgRed = parseInt(rbgBackgroundNum[0]);
+      const rbgGreen = parseInt(rbgBackgroundNum[1]);
+      const rbgBlue = parseInt(rbgBackgroundNum[2]);
+      hslBackground = RGBToHSL(rbgRed, rbgGreen, rbgBlue);
+      const hslBackgroundArray = hslBackground.match(/\d+(\.\d+)?/g);
+      const hueNum = parseInt(hslBackgroundArray[0]);
+      const satNum = parseInt(hslBackgroundArray[1]);
+      const lightNum = parseInt(hslBackgroundArray[2]);
+
+      console.log(lightNum);
+
       function changeColorDarken() {
         const divSquares = document.querySelectorAll(".divSquares");
         divSquares.forEach(function (square) {
-          let lightBase = 82.7;
+          let lightBase = `${lightNum}`;
           square.addEventListener("mouseover", function () {
-            lightBase *= 0.75;
-            const hslDark = `hsl(0, 0%, ${lightBase}%)`;
+            lightBase *= 0.65;
+            const hslDark = `hsl(${hueNum}, ${satNum}%, ${lightBase}%)`;
             square.style.backgroundColor = hslDark;
           });
         });
