@@ -89,12 +89,12 @@
       buttonColorChangeBlack.addEventListener("click", changeColorBlack);
 
       function changeColorDarken() {
-        lightBase = 82.7;
-        lightReduced = lightBase * 0.9;
-        const hslDark = `hsl(0, 0%, ${lightReduced}%)`;
         const divSquares = document.querySelectorAll(".divSquares");
         divSquares.forEach(function (square) {
+          let lightBase = 82.7;
           square.addEventListener("mouseover", function () {
+            lightBase *= 0.75;
+            const hslDark = `hsl(0, 0%, ${lightBase}%)`;
             square.style.backgroundColor = hslDark;
           });
         });
