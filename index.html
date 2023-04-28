@@ -10,11 +10,14 @@
   <body>
     <div class="title">Retro Sketch</div>
     <div class="middle">
-      <div class="middleLeft"></div>
-      <button class="buttonNumOfSquares">
-        Click to Choose Number of Boxes
-      </button>
-      <button class="buttonColorChangeBlack">Click to Sketch in Black</button>
+      <div class="middleLeft">
+        <button class="buttonNumOfSquares">
+          Click to Choose Number of Boxes
+        </button>
+        <button class="buttonColorChangeBlack">Click to Sketch in Black</button>
+        <button class="buttonColorChangeDarken">Click to Shade</button>
+        <button class="buttonReset">Click to Reset</button>
+      </div>
       <div class="container"></div>
       <div class="middleRight"></div>
     </div>
@@ -70,7 +73,7 @@
       const buttonNumOfSquares = document.querySelector(".buttonNumOfSquares");
       buttonNumOfSquares.addEventListener("click", buttonPrompt);
 
-      function changeColor() {
+      function changeColorBlack() {
         const divSquares = document.querySelectorAll(".divSquares");
         divSquares.forEach(function (square) {
           square.addEventListener("mouseover", function () {
@@ -83,7 +86,27 @@
       const buttonColorChangeBlack = document.querySelector(
         ".buttonColorChangeBlack"
       );
-      buttonColorChangeBlack.addEventListener("click", changeColor);
+      buttonColorChangeBlack.addEventListener("click", changeColorBlack);
+
+      function changeColorDarken() {
+        lightBase = 82.7;
+        lightReduced = lightBase * 0.9;
+        const hslDark = `hsl(0, 0%, ${lightReduced}%)`;
+        const divSquares = document.querySelectorAll(".divSquares");
+        divSquares.forEach(function (square) {
+          square.addEventListener("mouseover", function () {
+            square.style.backgroundColor = hslDark;
+          });
+        });
+      }
+
+      const buttonColorChangeDarken = document.querySelector(
+        ".buttonColorChangeDarken"
+      );
+      buttonColorChangeDarken.addEventListener("click", changeColorDarken);
+
+      const buttonReset = document.querySelector(".buttonReset");
+      buttonReset.addEventListener("click", createGrid);
     </script>
   </body>
 </html>
