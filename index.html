@@ -34,6 +34,7 @@
       let lengthOfSquare = 500 / squaresPerRow;
 
       function createGrid() {
+      //Creates a number of div elements with the class divSquares based off the number of squares selected and places them in the container
         container.innerHTML = "";
         for (let i = 0; i < numOfSquares; i++) {
           newDiv = document.createElement("div");
@@ -41,15 +42,16 @@
           container.appendChild(newDiv);
         }
 
-        const divSquares = document.querySelectorAll(".divSquares");
+        const divSquares = document.querySelectorAll(".divSquares"); //sizes each square based on the number of squares selected per row
         divSquares.forEach(function (square) {
           square.style.width = lengthOfSquare + "px";
         });
       }
 
-      createGrid();
+      createGrid(); //creates the baseline grid 
 
       function buttonPrompt() {
+      //function to prompt the user to enter desired boxes per row and re-size/re-create the grid based on their choice
         let userInput = parseInt(prompt("Select Number of Boxes Per Row"));
         let squaresPerRow = 50;
         if (userInput > 50 && userInput <= 100) {
@@ -73,10 +75,11 @@
         }
       }
 
-      const buttonNumOfSquares = document.querySelector(".buttonNumOfSquares");
-      buttonNumOfSquares.addEventListener("click", buttonPrompt);
+      const buttonNumOfSquares = document.querySelector(".buttonNumOfSquares"); 
+      buttonNumOfSquares.addEventListener("click", buttonPrompt);//calls the button prompt function when button is pressed
 
       function changeColorBlack() {
+      //function to change box colors to black on mouseover by reducing hsl color value to hsl(0, 0%, 0)
         const divSquares = document.querySelectorAll(".divSquares");
         divSquares.forEach(function (square) {
           square.addEventListener("mouseover", function () {
@@ -88,10 +91,10 @@
       const buttonColorChangeBlack = document.querySelector(
         ".buttonColorChangeBlack"
       );
-      buttonColorChangeBlack.addEventListener("click", changeColorBlack);
+      buttonColorChangeBlack.addEventListener("click", changeColorBlack); //calls the changeColorBlack function when button is pressed to sketch in blech
 
       function RGBToHSL(r, g, b) {
-        // From CSS Tricks https://css-tricks.com/converting-color-spaces-in-javascript/
+        // formula to convert RGB color to HSL. From CSS Tricks https://css-tricks.com/converting-color-spaces-in-javascript/
         r /= 255;
         g /= 255;
         b /= 255;
@@ -124,25 +127,25 @@
 
       function changeColorDarken() {
         const divSquare = document.querySelector(".divSquares");
-        const rbgBackgroundNum = window
-          .getComputedStyle(divSquare)
-          .backgroundColor.match(/\d+/g);
+        const rbgBackgroundNum = window 
+          .getComputedStyle(divSquare) //pulls all style information from single background div
+          .backgroundColor.match(/\d+/g); //isolates the RBG background color and then slices out just the numbers inside 
         const [rbgRed, rbgGreen, rbgBlue] = rbgBackgroundNum.map((num) =>
           parseInt(num)
-        );
+        );//converts the number strings into integers and places them in an array of [red, green, blue]
         hslBackgroundArray = RGBToHSL(rbgRed, rbgGreen, rbgBlue).match(
           /\d+(\.\d+)?/g
-        );
+        );//converts the RBG [red, green, blue] into HSL values and cuts out just the numbers
         const [hueNum, satNum, lightNum] = hslBackgroundArray.map((num) =>
           parseInt(num)
-        );
+        );//places the HSL numbers in an array of [hue, sauration, light]
         const divSquares = document.querySelectorAll(".divSquares");
         divSquares.forEach(function (square) {
-          let lightBase = `${lightNum}`;
+          let lightBase = `${lightNum}`;//pulls just the number for the %light and logs it into a bseline value for each of the div squares
           square.addEventListener("mouseover", function () {
-            lightBase *= 0.65;
-            const hslDark = `hsl(${hueNum}, ${satNum}%, ${lightBase}%)`;
-            square.style.backgroundColor = hslDark;
+            lightBase *= 0.65; //on mouseover of each square updates the %light to be some percentage lower 
+            const hslDark = `hsl(${hueNum}, ${satNum}%, ${lightBase}%)`; 
+            square.style.backgroundColor = hslDark; //restyles each div with the updated background color and reduced light%
           });
         });
       }
@@ -150,13 +153,15 @@
       const buttonColorChangeDarken = document.querySelector(
         ".buttonColorChangeDarken"
       );
-      buttonColorChangeDarken.addEventListener("click", changeColorDarken);
+      buttonColorChangeDarken.addEventListener("click", changeColorDarken);//calls the ColorDarken function when button is pressed
 
       function randomRGB() {
-        return Math.floor(Math.random() * (225 - 0 + 1)) + 0;
+      //generates a random number between 0-255
+        return Math.floor(Math.random() * (255 - 0 + 1)) + 0;
       }
 
       function changeColorRandom() {
+      //generates a random array of numbers and on mouseover turns them into an RGB string and restyles the background color usign that string
         const divSquares = document.querySelectorAll(".divSquares");
         divSquares.forEach(function (square) {
           const [rbgRed, rbgGreen, rbgBlue] = [
@@ -174,10 +179,10 @@
       const buttonColorChangeRandom = document.querySelector(
         ".buttonColorChangeRandom"
       );
-      buttonColorChangeRandom.addEventListener("click", changeColorRandom);
+      buttonColorChangeRandom.addEventListener("click", changeColorRandom);//calls the ColorRandom function when button is pressed
 
       const buttonReset = document.querySelector(".buttonReset");
-      buttonReset.addEventListener("click", createGrid);
+      buttonReset.addEventListener("click", createGrid);//recreates the grit when the reset button is pressed
     </script>
   </body>
 </html>
