@@ -88,15 +88,14 @@
       );
       buttonColorChangeBlack.addEventListener("click", changeColorBlack);
 
-      //Establish an RBG to HSL conversion function
-      //use get windows command to pull characteristics of the element
+
 
       function RGBToHSL(r, g, b) {
         // From CSS Tricks https://css-tricks.com/converting-color-spaces-in-javascript/
         r /= 255;
         g /= 255;
         b /= 255;
-
+        
         let cmin = Math.min(r, g, b),
           cmax = Math.max(r, g, b),
           delta = cmax - cmin,
@@ -123,21 +122,16 @@
         return "hsl(" + h + "," + s + "%," + l + "%)";
       }
 
-      const divSquares = document.querySelector(".divSquares");
-      const rbgBackground = window.getComputedStyle(divSquares).backgroundColor;
-      const rbgBackgroundNum = rbgBackground.match(/\d+/g);
-      const rbgRed = parseInt(rbgBackgroundNum[0]);
-      const rbgGreen = parseInt(rbgBackgroundNum[1]);
-      const rbgBlue = parseInt(rbgBackgroundNum[2]);
-      hslBackground = RGBToHSL(rbgRed, rbgGreen, rbgBlue);
-      const hslBackgroundArray = hslBackground.match(/\d+(\.\d+)?/g);
-      const hueNum = parseInt(hslBackgroundArray[0]);
-      const satNum = parseInt(hslBackgroundArray[1]);
-      const lightNum = parseInt(hslBackgroundArray[2]);
-
-      console.log(lightNum);
-
       function changeColorDarken() {
+        const divSquare = document.querySelector(".divSquares");
+        const rbgBackgroundNum = window
+          .getComputedStyle(divSquare)
+          .backgroundColor
+          .match(/\d+/g);
+        const [rbgRed, rbgGreen, rbgBlue] = rbgBackgroundNum.map((num) => parseInt(num));
+        hslBackgroundArray = RGBToHSL(rbgRed, rbgGreen, rbgBlue)
+          .match(/\d+(\.\d+)?/g);
+        const [hueNum, satNum, lightNum] = hslBackgroundArray.map((num) => parseInt(num));
         const divSquares = document.querySelectorAll(".divSquares");
         divSquares.forEach(function (square) {
           let lightBase = `${lightNum}`;

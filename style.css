@@ -7,14 +7,33 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: red;
   font-family: "Rondo", serif;
+  background-color: red;
 }
 
 .middle {
   display: flex;
+  
+}
+
+.middleLeft {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+button {
+  padding: 10px;
+  margin: 10px;
+  height: 50px;
+  width: 200px;
+  background-color: white;
+}
+
+.middleRight {
+  width: 214px;
+  height: 500px
 }
 
 .title {
@@ -29,13 +48,14 @@ body {
   flex-wrap: wrap;
   width: 500px;
   height: 500px;
-  margin-left: 100px;
-  margin-right: 100px;
+  padding-top: 0px;
+  padding-left: 50px;
+  padding-right: 50px;
   justify-content: center;
 }
 
 .divSquares {
-  background-color: lightgrey;
+  background-color: lightgray;
 }
 
 .divSquaresColor {
